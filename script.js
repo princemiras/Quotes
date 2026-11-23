@@ -15,10 +15,13 @@
     tired:      { label: "I'm Tired",            emoji: '😮‍💨', color: 'sun',   blurb: 'For when you are completely worn out' },
     friends:    { label: 'With My Classmates',   emoji: '🧑‍🤝‍🧑', color: 'mint',  blurb: 'For the joy of studying and laughing together' },
     home:       { label: 'Going Home Sad',       emoji: '🏡',  color: 'rose',  blurb: 'Comfort for the walk home after a rough day' },
-    pressure:   { label: 'When Home Is Hard',    emoji: '💔',  color: 'sky',   blurb: 'For when you are compared, pressured or put down at home' },
     acads:      { label: 'Academic Struggles',   emoji: '📚',  color: 'sky',   blurb: 'For bad grades, deadlines and exams' },
     mind:       { label: 'Mental Health',        emoji: '💚',  color: 'lav',   blurb: 'Gentle words for your heart and mind' },
-    motivation: { label: 'Get Motivated',        emoji: '🔥',  color: 'coral', blurb: 'A push to start, or to keep going' }
+    motivation: { label: 'Get Motivated',        emoji: '🔥',  color: 'coral', blurb: 'A push to start, or to keep going' },
+    work:       { label: 'Work & OJT',           emoji: '💼',  color: 'aqua',  blurb: 'For working students, first jobs and long shifts' },
+    love:       { label: 'Happy in Love',        emoji: '💖',  color: 'rose',  blurb: 'For the butterflies and the good days' },
+    heartbreak: { label: 'Heartbreak',           emoji: '💔',  color: 'lav',   blurb: 'Gentle words after a breakup' },
+    comeback:   { label: 'Hoping to Get Back Together', emoji: '🌈', color: 'sky', blurb: 'For when you miss them and still hope' }
   };
 
   // [category, quote]  (all original)
@@ -59,14 +62,6 @@
     ['home', "Your family's pride in you was never tied to a score. It was tied to who you are."],
     ['home', "Home is proof that you are loved without having to earn it."],
 
-    // --- When home is hard ---
-    ['pressure', "Being compared to someone else says nothing about your worth. You were never meant to be a copy of anyone."],
-    ['pressure', "Someone else's grades are their story. Yours has its own pace, its own plot, and its own ending."],
-    ['pressure', "Harsh words at home can sting more than any exam score. If they hurt, that's real, and it's okay to feel it."],
-    ['pressure', "You are not 'less than' because someone said so, even if that someone is family."],
-    ['pressure', "Pressure can come from love or from fear, but your worth was never up for debate."],
-    ['pressure', "You can aim high and still be gentle with yourself. Those two can live in the same heart."],
-
     // --- Academic struggles ---
     ['acads', "A failed test is a plot twist, not the ending. Your story gets better from here."],
     ['acads', "Every expert you admire once sat confused at the same kind of problem. Confusion is where learning begins."],
@@ -101,110 +96,54 @@
     ['motivation', "Progress is quiet. It looks like showing up again when nobody is clapping."],
     ['motivation', "The person you want to become is built from ordinary Tuesdays. Make this one count."],
     ['motivation', "Don't wait to feel ready. Ready is something you become by starting."],
-    ['motivation', "You're studying for a future that hasn't happened yet, and that takes real faith in yourself. Be proud of that."]
+    ['motivation', "You're studying for a future that hasn't happened yet, and that takes real faith in yourself. Be proud of that."],
+    // --- Work ---
+    ['work', "Your first paycheck won't make you rich, but it will teach you what your effort is worth. Keep going."],
+    ['work', "Working and studying at the same time is not a weakness. It's two jobs done by someone brave."],
+    ['work', "A bad day at work is one chapter, not the whole story. Clock out and let it stay behind."],
+    ['work', "Nobody is born knowing the job. Ask questions. Every expert was once the new hire who asked."],
+    ['work', "Be the person who shows up on time, tries honestly and treats people kindly. That reputation travels far."],
+    ['work', "OJT can feel like carrying coffee and photocopies. But you are watching how real work happens. Learn from every minute."],
+    ['work', "Being tired after a shift doesn't mean you're failing. It means you gave something real today."],
+    ['work', "Your boss's bad mood is not a grade on your worth. Do your best, breathe, and move on."],
+    ['work', "Rest on your day off without guilt. You can't pour from an empty cup, and you can't work from an empty body."],
+    ['work', "Mistakes at work are tuition. Own it, fix it, learn it, and you've already grown past it."],
+    ['work', "The work you do now, even when it feels small, is building the person who will lead someday."],
+    ['work', "Every peso you earn while studying is proof of your discipline. Be proud of it."],
+    // --- Love ---
+    ["love", "Being happy in love is wonderful. Just love your own dreams, grades and goals as loudly as you love them."],
+    ["love", "The best love makes you want to become a better student and a better person, not a more distracted one."],
+    ["love", "Share your good news with the one who cheers the loudest. Happiness doubles when it's shared."],
+    ["love", "A good partner celebrates your wins, waits through your busy weeks and never makes you choose between them and your future."],
+    ["love", "Love isn't only big surprises. It's the \"did you eat?\" text in the middle of a hard day."],
+    ["love", "Enjoy this happiness without guilt. You deserve soft moments between all the hard ones."],
+    ["love", "Love that is steady, kind and patient will still be there after the exams are done."],
+    ["love", "Study dates count. Review together, laugh together, and pass together."],
+    ["love", "You can be deeply in love and still need time for yourself, your friends and your family. That's healthy, not selfish."],
+    ["love", "Hold your happiness gently and gratefully. Today is a good day, so let it be one."],
+    ["heartbreak", "It's okay to cry about it. Your heart is not weak. It simply loved sincerely."],
+    ["heartbreak", "Heartbreak hurts because you cared deeply. That caring is still a beautiful part of you."],
+    ["heartbreak", "You don't have to be okay today. Eat something, drink water, and take the next small step."],
+    ["heartbreak", "Missing someone doesn't mean you should go back. Missing is love with nowhere to go, and it will soften with time."],
+    ["heartbreak", "Your worth was never decided by who stayed and who left."],
+    ["heartbreak", "Some nights feel heavier than others. Let them come and let them pass. Morning always arrives."],
+    ["heartbreak", "Lean on your friends, your family or a school counselor. You were never meant to heal alone."],
+    ["heartbreak", "Don't let a broken heart break your grades or your health. Look after yourself first, even if it's slowly."],
+    ["heartbreak", "Healing isn't a straight line. A bad day after a good week doesn't erase your progress."],
+    ["heartbreak", "One day you'll look back on this time and see how much stronger and wiser it made you."],
+    ["comeback", "Hoping is human. While you wait, grow: study, rest, laugh, and become someone you'd be proud to come back to."],
+    ["comeback", "If it's meant to work, it will survive time apart. If it isn't, you will survive too."],
+    ["comeback", "Don't put your life on pause waiting for someone. Keep moving. The right people can catch up."],
+    ["comeback", "Real love comes back with changed actions, not only sweet words. Look for the change."],
+    ["comeback", "Ask yourself honestly: do I miss the person, or the comfort of having someone? Both are valid. Just be honest."],
+    ["comeback", "Give space, not pressure. Respect is what keeps any future possible."],
+    ["comeback", "Work on what you can change in yourself, for your own sake, not just to win someone back."],
+    ["comeback", "Whether you get back together or not, you will be okay. Hold that truth next to your hope."],
+    ["comeback", "Be kind in your messages and patient in your waiting. Don't beg. Your dignity is part of your love."],
+    ["comeback", "Hope is allowed. So is letting go when it's time. Trust yourself to know the difference."]
   ];
 
-  const BASE_QUOTES = RAW_QUOTES.map(([cat, text], i) => ({ id: `${cat}-${i}`, cat, text }));
-
-  /* ---- Endless daily quotes ----
-     PER_DAY brand-new quotes unlock every day, the same for everybody, with no server.
-     Each quote = [lead-in] + [opener for its category] + [closing line], picked by a
-     fixed permutation, so none repeats until every combination is used (years).
-     To add more: just add lines to OPENERS / CLOSERS / LEADS. Don't reorder old lines,
-     or saved favorites of generated quotes will point to different text. */
-  const LAUNCH = new Date(2026, 10, 22); // first day (change to your own launch day)
-  const PER_DAY = 3;
-
-  const OPENERS = {
-    tired: [
-      "Tired doesn't mean weak. It means you've been giving more than you've been getting back.",
-      "Switch off the screen, loosen your shoulders, and let tonight be quiet.",
-      "Your body keeps count of every late night, so thank it by resting.",
-      "A slow day is still a day you moved forward.",
-      "You can't pour from an empty cup, and nobody is asking you to.",
-      "Sleep is not wasted time. It's where today's lessons settle into memory."
-    ],
-    friends: [
-      "A shared snack, a shared deadline, a shared laugh: that's how classmates become family.",
-      "Someone out there is glad you sat beside them today.",
-      "The group chat at midnight is proof you were never studying alone.",
-      "Good classmates remember your birthday and your presentation date.",
-      "Kindness spreads fast in a classroom, so be the one who starts it.",
-      "Your friends have seen you at your sleepiest and stayed anyway."
-    ],
-    home: [
-      "However loud the day was, the walk home can be gentle.",
-      "Home is where you take off your bag and your mask.",
-      "You are allowed to arrive home carrying more than books.",
-      "The evening belongs to you: slippers on, shoulders down, heart soft.",
-      "A warm meal is a quiet way of saying you matter.",
-      "Leave the school day at the gate and let the evening begin."
-    ],
-    pressure: [
-      "You don't have to prove your worth to people who only measure you in numbers.",
-      "It's okay to feel hurt when people you love compare you to others. It hurts because you care.",
-      "Their words describe their fears, not your future.",
-      "You are allowed to rest even when someone says you should be doing more.",
-      "Not being understood today doesn't mean you won't be understood someday.",
-      "You are not a project to be fixed. You are a person in progress."
-    ],
-    acads: [
-      "One low score is a snapshot, not your whole photo album.",
-      "Learning looks messy while it's happening, and that's normal.",
-      "Review a little every day and the mountain turns into stairs.",
-      "Asking a teacher for help is a study skill, not a confession.",
-      "Redo, retry, revise. Every pass makes it clearer.",
-      "A deadline is stressful, but it's also proof that you're in the game."
-    ],
-    mind: [
-      "Your thoughts are visitors. You don't have to give them your whole house.",
-      "Being sensitive is not a flaw. It means you feel the world deeply.",
-      "Healing is rarely a straight line, so be patient with the zigzags.",
-      "You don't have to earn rest. Needing it is reason enough.",
-      "Some days the bravest thing is to drink water and keep breathing.",
-      "Your feelings deserve a listener, even if it starts with you."
-    ],
-    motivation: [
-      "Start messy. A rough first draft beats a perfect plan that never begins.",
-      "You've survived every hard day so far. That's a perfect record.",
-      "Ten focused minutes are worth more than two hours of worrying.",
-      "Small steps count, especially the ones you take when you don't feel like it.",
-      "The person you're becoming will thank you for tonight's effort.",
-      "Momentum loves a small start, so open the notebook."
-    ]
-  };
-  const CLOSERS = [
-    "Be proud of how far you've come.", "One small step today is enough.", "You are more than your hardest day.",
-    "Breathe in slowly. You've got this.", "Rest, then try again tomorrow.", "Someone is cheering for you quietly.",
-    "Progress counts, even when it's slow.", "Be kind to yourself today.", "You're allowed to ask for help.",
-    "Your best today is enough.", "Today is not the whole story.", "You belong here, just as you are.",
-    "Drink some water. Take a breath. Keep going.", "Tomorrow is a fresh page.", "You are doing better than you think.",
-    "Trust the slow, steady you.", "Hold on. Better days are on their way.", "You matter, whatever the score says.",
-    "Take it one gentle step at a time.", "Your effort is seen, even when you can't tell.", "It's okay to start again.",
-    "You were made to grow, not to be perfect.", "Let that sink in, then let it go.", "You've survived every hard day so far."
-  ];
-  const LEADS = ['', 'Note to self: ', 'Reminder: ', 'Read this twice: ', "Today's truth: ", 'Psst. ', 'Gentle reminder: ', 'Breathe. '];
-
-  const CAT_KEYS = Object.keys(CATEGORIES);
-  const TODAY_IDX = (() => {
-    const n = new Date();
-    return Math.max(0, Math.round((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - LAUNCH) / 864e5));
-  })();
-
-  function genQuote(g) {
-    const slot = g % CAT_KEYS.length;
-    const cat = CAT_KEYS[slot];
-    const op = OPENERS[cat];
-    const space = op.length * CLOSERS.length * LEADS.length;
-    const idx = (Math.floor(g / CAT_KEYS.length) * 509 + slot * 97) % space; // 509 is prime: no repeats until `space` is used up
-    const lead = LEADS[Math.floor(idx / (op.length * CLOSERS.length)) % LEADS.length];
-    const text = `${lead}${op[idx % op.length]} ${CLOSERS[Math.floor(idx / op.length) % CLOSERS.length]}`;
-    return { id: `g${g}`, cat, text, day: Math.floor(g / PER_DAY) };
-  }
-  const GENERATED = [];
-  for (let g = 0; g < (TODAY_IDX + 1) * PER_DAY; g += 1) GENERATED.push(genQuote(g));
-  const QUOTES = GENERATED.slice().reverse().concat(BASE_QUOTES); // newest first
-  const TODAY_QUOTES = GENERATED.filter((q) => q.day === TODAY_IDX);
+  const QUOTES = RAW_QUOTES.map(([cat, text], i) => ({ id: `${cat}-${i}`, cat, text }));
 
   // Short phrases for the scrolling band
   const PHRASES = [
@@ -225,8 +164,6 @@
       tip: 'Try the 5-minute rule: set a timer for 5 minutes and begin. If you want to stop after that, you can.' },
     { key: 'home',     emoji: '🥺',  label: 'Want to go home', cat: 'home',
       tip: 'When you get home, eat and rest first. It is okay to say, "Mom, Dad, I\'m tired," with nothing more.' },
-    { key: 'pressured', emoji: '😞', label: 'Pressured at home', cat: 'pressure', help: true,
-      tip: 'Step away for a few minutes and breathe slowly. Their words are not the final word on your worth. Then write what you feel in the journal below.' },
     { key: 'happy',    emoji: '😄',  label: 'Happy',           cat: 'friends',
       tip: 'Thank one classmate today. Happiness grows when you share it.' }
   ];
@@ -245,8 +182,6 @@
       thanks: "Thank you for writing that down. Saying how you feel takes courage, and it's already a step forward." },
     { key: 'stressed', emoji: '😰', label: 'Stressed', cat: 'acads',
       thanks: "That sounds like a lot to hold. Putting it on the page makes it a little lighter and a little smaller." },
-    { key: 'compared', emoji: '😔', label: 'Compared', cat: 'pressure', help: true,
-      thanks: "Being compared hurts, and it makes sense that it stings. Thank you for putting it into words." },
     { key: 'angry',    emoji: '😠', label: 'Angry',    cat: 'mind',
       thanks: "Your anger makes sense, and it's okay to feel it. Writing it out is a safe place to let it breathe." },
     { key: 'lonely',   emoji: '🥺', label: 'Lonely',   cat: 'mind', help: true,
@@ -265,47 +200,6 @@
     { from: 'Dad', text: "I never expected perfect. I want you to grow up happy and healthy." },
     { from: 'Mom', text: "You might fail a subject, but you will never fail as our child." },
     { from: 'Dad', text: "Rest first, kiddo. Blaming yourself doesn't help you study. Rest, food and love do." }
-  ];
-
-  // For students whose home is not a place of rest
-  const LETTERS_HEAVY = [
-    { from: 'Someone who gets it', text: "Being compared hurts, and it's okay that it hurts. You're not too sensitive. You're human." },
-    { from: 'Your future self', text: "I'm proud you kept going on the days nobody at home said well done." },
-    { from: 'A friend', text: "Your grades don't decide whether you're enough. I've seen how hard you try." },
-    { from: 'A teacher', text: "Slow progress is still progress. I've seen you grow even when you can't see it." },
-    { from: 'Someone who has been there', text: "Their words may come from fear or their own pressure, but you are still allowed to feel hurt, and you are still worthy." },
-    { from: 'Your own heart', text: "You don't have to become your cousin, your classmate, or the 'perfect child'. You only need to become you." },
-    { from: 'A friend', text: "When home feels loud, find a quiet corner. Breathe. You're not alone, and this moment will pass." },
-    { from: 'You, years from now', text: "One day you'll tell someone who needs it, 'I'm proud of you.' You'll know how much it means." }
-  ];
-
-  const HOME_MODES = {
-    warm: {
-      label: '💌 Words I hope to hear', letters: LETTERS,
-      intro: "If you're upset about a grade, about school, or about life, these are the words we hope you'd hear from your Mom and Dad when you walk through the door. Open each letter."
-    },
-    heavy: {
-      label: '💔 When home feels heavy', letters: LETTERS_HEAVY,
-      intro: "Not everyone gets to rest when they get home. Sometimes there is more scolding, more pressure, and being compared to a cousin, a classmate or the \"top student next door.\" If that's you, it hurts, and you are not alone. These are words you deserve to hear, even if no one at home has said them yet."
-    }
-  };
-
-  // Gentle words for the "Take it slow" section
-  const GENTLE = [
-    "Take your time. Nothing here is a race.",
-    "You have done enough for today. Truly.",
-    "Let your shoulders drop. Let your jaw unclench. You're safe right now.",
-    "Be as patient with yourself as you are with the people you love.",
-    "You don't have to fix everything tonight. Just breathe.",
-    "Slow is still moving. Soft is still strong.",
-    "This feeling is heavy, but it is not forever.",
-    "Rest is not giving up. It's how you get ready to continue.",
-    "You are allowed to pause, and the world will wait for you.",
-    "Whatever you carried today, you can put it down for a while.",
-    "You're doing something right just by taking this moment for yourself.",
-    "Small and slow is a perfectly good way to heal.",
-    "One breath. Then another. That's all you need to do right now.",
-    "You are worth the same care you give to everyone else."
   ];
 
   // Small steps for today
@@ -442,7 +336,6 @@
         return;
       }
       clearTimeout(timer);
-      armed = false; btn.textContent = original; btn.classList.remove('is-armed');
       onConfirm();
     });
   }
@@ -546,9 +439,7 @@
         if (!persistent || !est || !est.usage) return;
         const mb = est.usage / (1024 * 1024);
         const used = mb >= 1024 ? `${(mb / 1024).toFixed(1)} GB` : `${mb.toFixed(mb < 10 ? 1 : 0)} MB`;
-        const qm = (est.quota || 0) / (1024 * 1024);
-        const total = qm ? ` of about ${qm >= 1024 ? `${(qm / 1024).toFixed(1)} GB` : `${Math.round(qm)} MB`} available` : '';
-        el.textContent = `🔒 Stored privately on this device. Using about ${used}${total}.`;
+        el.textContent = `🔒 Stored privately on this device. Using about ${used} of your browser's storage.`;
       }).catch(() => {});
     }
   }
@@ -600,7 +491,9 @@
   let dailyQuote = null;
 
   function quoteOfTheDay() {
-    return TODAY_QUOTES[0] || QUOTES[0]; // first of today's brand-new quotes
+    const d = new Date();
+    const key = d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate();
+    return QUOTES[key % QUOTES.length];
   }
 
   function showDaily(q) {
@@ -639,13 +532,10 @@
      7) PICK YOUR QUOTES (big category buttons)
      --------------------------------------------------------- */
 
-  let activeFilter = 'all'; // 'all' | 'new' | a key of CATEGORIES | 'fav'
-  const PAGE = 24;          // quotes shown at a time (the library keeps growing)
-  let shown = PAGE;
+  let activeFilter = 'all'; // 'all' | a key of CATEGORIES | 'fav'
 
   function selectCategory(key, shouldScroll) {
     activeFilter = key;
-    shown = PAGE;
     renderPicker();
     renderTabs();
     renderGrid();
@@ -692,7 +582,6 @@
     };
 
     wrap.append(makeTab('all', 'All'));
-    wrap.append(makeTab('new', '🆕 New today', TODAY_QUOTES.length));
     Object.entries(CATEGORIES).forEach(([key, c]) => wrap.append(makeTab(key, `${c.emoji} ${c.label}`)));
     wrap.append(makeTab('fav', '♥ Favorites', favorites.size));
   }
@@ -729,17 +618,15 @@
     const grid = $('quoteGrid');
     let list;
     if (activeFilter === 'all') list = QUOTES;
-    else if (activeFilter === 'new') list = TODAY_QUOTES;
     else if (activeFilter === 'fav') list = QUOTES.filter((q) => favorites.has(q.id));
     else list = QUOTES.filter((q) => q.cat === activeFilter);
 
     grid.textContent = '';
-    list.slice(0, shown).forEach((q, i) => grid.append(makeNote(q, i)));
-    $('loadMore').hidden = shown >= list.length;
+    list.forEach((q, i) => grid.append(makeNote(q, i)));
 
     $('emptyFav').hidden = !(activeFilter === 'fav' && list.length === 0);
     $('quoteCount').textContent = list.length
-      ? `Showing ${Math.min(shown, list.length)} of ${list.length} ${list.length === 1 ? 'quote' : 'quotes'}`
+      ? `Showing ${list.length} ${list.length === 1 ? 'quote' : 'quotes'}`
       : '';
   }
 
@@ -787,13 +674,6 @@
      --------------------------------------------------------- */
 
   let photos = [];                 // metadata, newest first
-  let albums = store.get('albums', []);   // folders: [{ id, name }]
-  if (!Array.isArray(albums)) albums = [];
-  let activeAlbum = 'all';         // 'all' or a folder id
-  let albumEditing = null;
-  const visiblePhotos = () => (activeAlbum === 'all' ? photos : photos.filter((p) => p.album === activeAlbum));
-  const albumName = (id) => { const a = albums.find((x) => x.id === id); return a ? a.name : ''; };
-  let lbList = [];                 // photos the lightbox is flipping through
   const thumbUrls = new Map();     // photo id -> object URL for the grid
   let lightboxIndex = -1;
   let lightboxUrl = null;
@@ -818,27 +698,6 @@
     }
   }
 
-  // Shrink big phone photos before saving. Still sharp, but uses far less storage,
-  // so many more photos fit. Falls back to the original file if anything goes wrong.
-  async function shrinkPhoto(file, max = 2048) {
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type || '')) return file;
-    try {
-      const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
-      const scale = Math.min(1, max / Math.max(bmp.width, bmp.height));
-      if (scale === 1 && file.size < 1.5 * 1024 * 1024) { if (bmp.close) bmp.close(); return file; }
-      const c = document.createElement('canvas');
-      c.width = Math.max(1, Math.round(bmp.width * scale));
-      c.height = Math.max(1, Math.round(bmp.height * scale));
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, c.width, c.height);
-      ctx.drawImage(bmp, 0, 0, c.width, c.height);
-      if (bmp.close) bmp.close();
-      const blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.86));
-      return blob && blob.size < file.size ? blob : file;
-    } catch (e) { return file; }
-  }
-
   async function thumbUrlFor(meta) {
     if (thumbUrls.has(meta.id)) return thumbUrls.get(meta.id);
     let blob = meta.thumb;
@@ -853,99 +712,10 @@
   }
 
   function updateWallUi() {
-    const list = visiblePhotos();
-    const empty = $('wallEmpty');
-    if (!empty.dataset.all) empty.dataset.all = empty.textContent;
-    empty.textContent = activeAlbum === 'all'
-      ? empty.dataset.all
-      : 'This folder is empty. Add photos here, or move photos in using the 📁 menu on each photo.';
-    empty.hidden = list.length > 0;
-    $('wallCount').textContent = list.length
-      ? `${list.length} ${list.length === 1 ? 'memory' : 'memories'} ${activeAlbum === 'all' ? 'on your wall' : `in “${albumName(activeAlbum)}”`}`
+    $('wallEmpty').hidden = photos.length > 0;
+    $('wallCount').textContent = photos.length
+      ? `${photos.length} ${photos.length === 1 ? 'memory' : 'memories'} on your wall`
       : '';
-  }
-
-  /* ---- Folders (like Featured / Highlights) ---- */
-  function renderAlbums() {
-    const row = $('albumRow');
-    row.textContent = '';
-    const make = (key, label, count, coverMeta, emoji, extra) => {
-      let inner;
-      if (coverMeta) {
-        inner = h('img', { class: 'album__img', alt: '' });
-        thumbUrlFor(coverMeta).then((u) => { if (u) inner.src = u; }).catch(() => {});
-      } else {
-        inner = h('span', { class: 'album__emoji', 'aria-hidden': 'true', text: emoji });
-      }
-      return h('button', {
-        class: `album ${extra || ''}`, type: 'button', 'aria-pressed': String(activeAlbum === key),
-        onclick: () => (key === '__new' ? openAlbumForm(null) : selectAlbum(key))
-      }, [
-        h('span', { class: 'album__circle' }, [inner]),
-        h('span', { class: 'album__name', text: label }),
-        count == null ? null : h('span', { class: 'album__count', text: `${count} ${count === 1 ? 'photo' : 'photos'}` })
-      ]);
-    };
-    row.append(make('__new', 'New folder', null, null, '＋', 'album--new'));
-    row.append(make('all', 'All', photos.length, photos[0], '🖼️'));
-    albums.forEach((a) => {
-      const inAlbum = photos.filter((p) => p.album === a.id);
-      row.append(make(a.id, a.name, inAlbum.length, inAlbum[0], '📁'));
-    });
-    $('albumTools').hidden = activeAlbum === 'all';
-  }
-
-  function selectAlbum(key) {
-    activeAlbum = key;
-    $('albumForm').hidden = true;
-    renderAlbums();
-    renderWall();
-  }
-
-  function openAlbumForm(editId) {
-    albumEditing = editId;
-    $('albumForm').hidden = false;
-    $('albumName').value = editId ? albumName(editId) : '';
-    $('albumSave').textContent = editId ? 'Save name' : 'Create folder';
-    $('albumName').focus();
-  }
-
-  function initAlbums() {
-    $('albumForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = $('albumName').value.replace(/\s+/g, ' ').trim().slice(0, 30);
-      if (!name) return;
-      if (albumEditing) {
-        const a = albums.find((x) => x.id === albumEditing);
-        if (a) a.name = name;
-        toast('Folder renamed');
-      } else {
-        const a = { id: 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name };
-        albums.push(a);
-        activeAlbum = a.id;
-        toast(`Folder “${name}” created 📁`);
-      }
-      store.set('albums', albums);
-      $('albumForm').hidden = true;
-      renderAlbums();
-      renderWall();
-    });
-    $('albumCancel').addEventListener('click', () => { $('albumForm').hidden = true; });
-    $('albumRename').addEventListener('click', () => { if (activeAlbum !== 'all') openAlbumForm(activeAlbum); });
-    armButton($('albumDelete'), 'Sure? Tap again', async () => {
-      const id = activeAlbum;
-      if (id === 'all') return;
-      for (const p of photos) {
-        if (p.album === id) { p.album = null; try { await db.put('photos', p); } catch (e) { /* keep going */ } }
-      }
-      albums = albums.filter((a) => a.id !== id);
-      store.set('albums', albums);
-      activeAlbum = 'all';
-      renderAlbums();
-      renderWall();
-      toast('Folder deleted. Your photos are still on the wall.');
-    });
-    renderAlbums();
   }
 
   function makePolaroid(meta, index) {
@@ -957,7 +727,7 @@
 
     const open = h('button', {
       class: 'polaroid__imgbtn', type: 'button', 'aria-label': 'View this photo larger',
-      onclick: (e) => { lbList = visiblePhotos(); openLightbox(lbList.findIndex((p) => p.id === meta.id), e.currentTarget); }
+      onclick: (e) => openLightbox(photos.findIndex((p) => p.id === meta.id), e.currentTarget)
     }, [img]);
 
     const cap = h('input', {
@@ -971,23 +741,9 @@
     });
     cap.addEventListener('keydown', (e) => { if (e.key === 'Enter') cap.blur(); });
 
-    const sel = h('select', { class: 'polaroid__album', 'aria-label': 'Move this photo to a folder' }, [
-      h('option', { value: '', text: '📁 No folder' }),
-      ...albums.map((a) => h('option', { value: a.id, text: `📁 ${a.name}` }))
-    ]);
-    sel.value = meta.album || '';
-    sel.addEventListener('change', async () => {
-      meta.album = sel.value || null;
-      try { await db.put('photos', meta); } catch (e) { toast("Couldn't move the photo."); return; }
-      if (activeAlbum !== 'all' && meta.album !== activeAlbum) card.remove();
-      renderAlbums();
-      updateWallUi();
-      toast(meta.album ? `Moved to “${albumName(meta.album)}” 📁` : 'Removed from folder');
-    });
-
     const del = h('button', { class: 'polaroid__del', type: 'button', 'aria-label': 'Delete this photo', text: '✕' });
     const card = h('article', { class: 'polaroid', 'data-id': String(meta.id) }, [
-      del, open, cap, h('span', { class: 'polaroid__date', text: formatDate(meta.ts) }), sel
+      del, open, cap, h('span', { class: 'polaroid__date', text: formatDate(meta.ts) })
     ]);
     card.style.setProperty('--tilt', TILTS[index % TILTS.length]);
     armButton(del, 'Delete?', () => removePhoto(meta.id, card));
@@ -1004,14 +760,13 @@
     if (url) { URL.revokeObjectURL(url); thumbUrls.delete(id); }
     if (card && card.remove) card.remove();
     updateWallUi();
-    renderAlbums();
     toast('Photo removed');
   }
 
   function renderWall() {
     const wall = $('wall');
     wall.textContent = '';
-    visiblePhotos().forEach((p, i) => wall.append(makePolaroid(p, i)));
+    photos.forEach((p, i) => wall.append(makePolaroid(p, i)));
     updateWallUi();
   }
 
@@ -1030,9 +785,8 @@
       if (files.length > 1) toast(`Saving photo ${i + 1} of ${files.length}…`, 6000);
       try {
         const thumb = await makeThumb(f);
-        const full = await shrinkPhoto(f);
-        const meta = await db.put('photos', { ts: Date.now() + i, name: f.name || 'photo', type: full.type || f.type || '', size: full.size || 0, caption: '', album: activeAlbum === 'all' ? null : activeAlbum, thumb });
-        await db.put('files', { id: meta.id, blob: full });
+        const meta = await db.put('photos', { ts: Date.now() + i, name: f.name || 'photo', type: f.type || '', size: f.size || 0, caption: '', thumb });
+        await db.put('files', { id: meta.id, blob: f });
         photos.unshift(meta);
         const wall = $('wall');
         wall.prepend(makePolaroid(meta, 0));
@@ -1044,13 +798,12 @@
       }
     }
     if (saved) toast(`${saved} ${saved === 1 ? 'photo' : 'photos'} added to your wall 📸${skipped ? ` (${skipped} skipped)` : ''}`);
-    renderAlbums();
     updateStorageNote();
   }
 
   /* ---- Lightbox ---- */
   async function showLightbox(index) {
-    const meta = lbList[index];
+    const meta = photos[index];
     if (!meta) return;
     lightboxIndex = index;
     const rec = await db.get('files', meta.id);
@@ -1061,7 +814,7 @@
     img.src = lightboxUrl;
     img.alt = meta.caption || 'Photo with friends';
     $('lbCap').textContent = meta.caption || '';
-    const multiple = lbList.length > 1;
+    const multiple = photos.length > 1;
     $('lbPrev').hidden = !multiple;
     $('lbNext').hidden = !multiple;
   }
@@ -1086,8 +839,8 @@
   }
 
   function stepLightbox(delta) {
-    if (!lbList.length || lightboxIndex < 0) return;
-    showLightbox((lightboxIndex + delta + lbList.length) % lbList.length);
+    if (!photos.length || lightboxIndex < 0) return;
+    showLightbox((lightboxIndex + delta + photos.length) % photos.length);
   }
 
   function initLightbox() {
@@ -1132,12 +885,10 @@
     }));
 
     initLightbox();
-    initAlbums();
 
     db.all('photos').then((list) => {
       photos = list.sort((a, b) => (b.id || 0) - (a.id || 0));
       renderWall();
-      renderAlbums();
       updateStorageNote();
     }).catch(() => { renderWall(); updateStorageNote(); });
 
@@ -1256,10 +1007,9 @@
      12) LETTERS FROM HOME
      --------------------------------------------------------- */
 
-  function renderLetters(mode) {
+  function initLetters() {
     const wrap = $('letters');
-    wrap.textContent = '';
-    HOME_MODES[mode].letters.forEach((l, i) => {
+    LETTERS.forEach((l, i) => {
       const bodyId = `letter-body-${i}`;
       const head = h('button', {
         class: 'letter__head', type: 'button', 'aria-expanded': 'false', 'aria-controls': bodyId
@@ -1271,7 +1021,7 @@
         ])
       ]);
       const body = h('div', { class: 'letter__body', id: bodyId }, [
-        h('div', {}, [h('p', { class: 'letter__text', text: (userName ? `Dear ${userName},\n` : '') + l.text })])
+        h('div', {}, [h('p', { class: 'letter__text', text: l.text })])
       ]);
       const card = h('article', { class: 'letter', 'data-open': 'false' }, [head, body]);
 
@@ -1283,22 +1033,6 @@
       });
       wrap.append(card);
     });
-  }
-
-  function showHome(mode) {
-    homeMode = mode;
-    $('homeIntro').textContent = HOME_MODES[mode].intro;
-    $('calloutTell').hidden = mode !== 'warm';
-    $('calloutHeavy').hidden = mode !== 'heavy';
-    document.querySelectorAll('#homeTabs .tab').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
-    renderLetters(mode);
-  }
-
-  function initLetters() {
-    Object.entries(HOME_MODES).forEach(([key, m]) => {
-      $('homeTabs').append(h('button', { class: 'tab', type: 'button', 'data-mode': key, 'aria-pressed': 'false', onclick: () => showHome(key) }, m.label));
-    });
-    showHome('warm');
   }
 
   /* ---------------------------------------------------------
@@ -1461,185 +1195,11 @@
      17) START
      --------------------------------------------------------- */
 
-  /* ---------------------------------------------------------
-     NAME: greet the visitor (a website can't know a name by itself,
-     so we use ?name=Prince in the link, or ask once and remember it)
-     --------------------------------------------------------- */
-  let userName = '';
-  let homeMode = 'warm';
-  const cleanName = (s) => String(s || '').replace(/\s+/g, ' ').trim().slice(0, 30);
-
-  function applyName() {
-    $('greetText').textContent = userName ? `Hi, ${userName}! 💛` : 'Welcome! 💛';
-    $('changeName').textContent = userName ? 'Not you? Change name' : 'Add my name';
-    $('gentleLabel').textContent = userName ? `💚 A gentle word for ${userName}` : '💚 A gentle word';
-    $('dailyLabel').textContent = userName ? `✨ Quote of the day for ${userName}` : '✨ Quote of the day';
-    $('footerBig').textContent = userName
-      ? `${userName}, you don't have to be perfect. Showing up is enough. 💛`
-      : "You don't have to be perfect. Showing up is enough. 💛";
-    showHome(homeMode);
-    if (store.get('remind', false)) saveSchedule();
-  }
-
-  function openWelcome() {
-    $('welcome').hidden = false;
-    $('nameInput').value = userName;
-    $('nameInput').focus();
-  }
-
-  function initName() {
-    const fromLink = cleanName(new URLSearchParams(location.search).get('name'));
-    userName = fromLink || cleanName(store.get('name', ''));
-    if (fromLink) store.set('name', fromLink);
-    applyName();
-    $('changeName').addEventListener('click', openWelcome);
-    $('nameForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      userName = cleanName($('nameInput').value);
-      store.set('name', userName);
-      store.set('nameAsked', true);
-      $('welcome').hidden = true;
-      applyName();
-      if (userName) toast(`Welcome, ${userName}! 💛`);
-    });
-    $('nameSkip').addEventListener('click', () => { store.set('nameAsked', true); $('welcome').hidden = true; });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('welcome').hidden = true; });
-    if (!userName && !store.get('nameAsked', false)) setTimeout(openWelcome, 700);
-  }
-
-  /* ---------------------------------------------------------
-     MENU (hamburger on small screens) + BACK TO TOP
-     --------------------------------------------------------- */
-  function initMenu() {
-    const header = document.querySelector('.site-header');
-    const btn = $('menuToggle');
-    const setOpen = (open) => {
-      header.classList.toggle('menu-open', open);
-      btn.setAttribute('aria-expanded', String(open));
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    };
-    btn.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!header.classList.contains('menu-open')); });
-    $('mainNav').addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
-    document.addEventListener('click', (e) => { if (!header.contains(e.target)) setOpen(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 900) setOpen(false); });
-  }
-
-  function initToTop() {
-    const btn = $('toTop');
-    const update = () => btn.classList.toggle('show', window.pageYOffset > 400);
-    window.addEventListener('scroll', update, { passive: true });
-    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' }));
-    update();
-  }
-
-  /* ---------------------------------------------------------
-     DAILY REMINDER (notification with the quote of the day)
-     The page saves the next 30 days of quotes where the service
-     worker can read them, so it can show one even when the site is closed.
-     --------------------------------------------------------- */
-  const hasNotif = () => 'Notification' in window;
-  const dateKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-  const remindOn = () => !!store.get('remind', false) && hasNotif() && Notification.permission === 'granted';
-
-  async function saveSchedule() {
-    if (!('caches' in window)) return;
-    try {
-      const days = [];
-      for (let i = 0; i < 30; i += 1) {
-        const d = new Date();
-        d.setHours(12, 0, 0, 0);
-        d.setDate(d.getDate() + i);
-        const idx = Math.max(0, Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - LAUNCH) / 864e5));
-        days.push({ date: dateKey(d), text: genQuote(idx * PER_DAY).text });
-      }
-      const c = await caches.open('stg-daily');
-      await c.put(new URL('daily.json', location.href).href, new Response(JSON.stringify({ name: userName, days })));
-    } catch (e) { /* not available here */ }
-  }
-
-  async function getReg() {
-    if (!('serviceWorker' in navigator)) return null;
-    try { await navigator.serviceWorker.register('sw.js'); return await navigator.serviceWorker.ready; } catch (e) { return null; }
-  }
-
-  function notifyToday(reg) {
-    const q = TODAY_QUOTES[0] || QUOTES[0];
-    const icon = new URL('icon-192.png', location.href).href;
-    const title = `Quote of the day${userName ? ' for ' + userName : ''} ✨`;
-    if (reg) return reg.showNotification(title, { body: q.text, icon, badge: icon, tag: 'daily-quote' });
-    return Promise.resolve(new Notification(title, { body: q.text, icon }));
-  }
-
-  async function registerPeriodic(reg) {
-    if (!reg || !('periodicSync' in reg)) return false;
-    try { await reg.periodicSync.register('daily-quote', { minInterval: 864e5 }); return true; } catch (e) { return false; }
-  }
-
-  function updateRemindBtn() {
-    const on = remindOn();
-    const b = $('dailyRemind');
-    b.setAttribute('aria-pressed', String(on));
-    b.textContent = on ? '🔕 Reminders on' : '🔔 Remind me daily';
-  }
-
-  async function enableReminders() {
-    if (!hasNotif()) {
-      toast('This browser can\'t show reminders. On iPhone: tap Share, then Add to Home Screen, and open it from there.', 7000);
-      return;
-    }
-    const perm = await Notification.requestPermission();
-    if (perm !== 'granted') { toast('Notifications are blocked. Allow them in your browser settings to get daily quotes.', 5500); return; }
-    store.set('remind', true);
-    await saveSchedule();
-    const reg = await getReg();
-    const auto = await registerPeriodic(reg);
-    store.set('lastNotified', dateKey(new Date()));
-    try { await notifyToday(reg); } catch (e) { /* ignore */ }
-    updateRemindBtn();
-    toast(auto
-      ? 'Daily reminders are on 🔔 A quote will pop up each day.'
-      : 'Reminders on 🔔 You\'ll get today\'s quote when you open the site. Install it (Add to Home Screen) for automatic pop-ups where your browser allows.', 7000);
-  }
-
-  async function disableReminders() {
-    store.set('remind', false);
-    const reg = await getReg();
-    try { if (reg && reg.periodicSync) await reg.periodicSync.unregister('daily-quote'); } catch (e) { /* ignore */ }
-    updateRemindBtn();
-    toast('Reminders turned off');
-  }
-
-  function initReminders() {
-    updateRemindBtn();
-    $('dailyRemind').addEventListener('click', () => (remindOn() ? disableReminders() : enableReminders()));
-    getReg().then(async (reg) => {
-      if (!reg || !remindOn()) return;
-      await saveSchedule();
-      await registerPeriodic(reg);
-      const today = dateKey(new Date());
-      if (store.get('lastNotified', '') !== today) { store.set('lastNotified', today); notifyToday(reg).catch(() => {}); }
-    });
-  }
-
-  let gentleLast = -1;
-  function showGentle() {
-    let i;
-    do { i = Math.floor(Math.random() * GENTLE.length); } while (i === gentleLast && GENTLE.length > 1);
-    gentleLast = i;
-    $('gentleText').textContent = GENTLE[i];
-  }
-  function initGentle() {
-    showGentle();
-    $('gentleNext').addEventListener('click', showGentle);
-  }
-
   function init() {
     initAnchorLinks();
     initTheme();
     initDaily();
     initMarquee();
-    $('loadMore').addEventListener('click', () => { shown += PAGE; renderGrid(); });
     renderPicker();
     renderTabs();
     renderGrid();
@@ -1652,11 +1212,6 @@
     renderWins();
     initWins();
     initReveal();
-    initGentle();
-    initName();
-    initMenu();
-    initToTop();
-    initReminders();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -2,13 +2,8 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Still Got This — Motivational Quotes for Students</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#ff7a59">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="description" content="Motivational quotes for students: when you're tired, with your classmates, going home sad, for academic struggles and mental health. Plus a photo wall and a private feelings journal.">
 
   <!-- Set the theme early so the page doesn't flash -->
@@ -44,7 +39,7 @@
       <span>Still Got This</span>
     </a>
 
-    <nav class="nav" id="mainNav" aria-label="Main menu">
+    <nav class="nav" aria-label="Main menu">
       <a href="#pick">Quotes</a>
       <a href="#mood">Mood</a>
       <a href="#memories">Memories</a>
@@ -56,12 +51,6 @@
 
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch between light and dark theme">
       <span aria-hidden="true" id="themeIcon">🌙</span>
-    </button>
-
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">
-      <span class="menu-toggle__bar" aria-hidden="true"></span>
-      <span class="menu-toggle__bar" aria-hidden="true"></span>
-      <span class="menu-toggle__bar" aria-hidden="true"></span>
     </button>
   </header>
 
@@ -80,8 +69,7 @@
       <span class="doodle doodle--4" aria-hidden="true">📚</span>
 
       <div class="hero__text reveal">
-        <p class="greet" id="greet"><span id="greetText"></span> <button class="linklike" id="changeName" type="button">Add my name</button></p>
-        <p class="pill">✨ <span id="quoteTotal">60</span> quotes · 3 new every day · photo wall · private journal</p>
+        <p class="pill">✨ <span id="quoteTotal">60</span> original quotes · photo wall · private journal</p>
         <h1>Tired? <span class="hl">You still got this.</span></h1>
         <p class="lead">
           Words for the late nights, for the joy of being with your classmates,
@@ -97,14 +85,14 @@
       <figure class="hero-card reveal" id="dailyCard">
         <span class="tape" aria-hidden="true"></span>
         <span class="hero-card__mark" aria-hidden="true">&ldquo;</span>
-        <figcaption class="hero-card__label" id="dailyLabel">✨ Quote of the day</figcaption>
+        <figcaption class="hero-card__label">✨ Quote of the day</figcaption>
         <blockquote class="hero-card__quote" id="dailyQuote" aria-live="polite">Loading your quote…</blockquote>
         <p class="chip" id="dailyCat"></p>
         <div class="hero-card__actions">
           <button class="btn btn--small" id="dailyNew" type="button">🔄 Another quote</button>
           <button class="btn btn--small" id="dailyCopy" type="button">📋 Copy</button>
           <button class="btn btn--small" id="dailyFav" type="button" aria-pressed="false">♡ Favorite</button>
-          <button class="btn btn--small" id="dailyRemind" type="button" aria-pressed="false">🔔 Remind me daily</button>
+          <button class="btn btn--small" id="dailyRemind" type="button">🔔 Remind me daily</button>
         </div>
       </figure>
     </section>
@@ -133,7 +121,6 @@
       <div class="tabs reveal" id="tabs" role="group" aria-label="Quote categories"></div>
       <p class="count" id="quoteCount" aria-live="polite"></p>
       <div class="notes" id="quoteGrid"></div>
-      <div class="more"><button class="btn" id="loadMore" type="button" hidden>Show more quotes ↓</button></div>
       <p class="empty" id="emptyFav" hidden>No favorites yet. Tap the ♡ on any quote to save it here. 💛</p>
     </section>
 
@@ -177,26 +164,10 @@
         <div class="dropzone__icon" aria-hidden="true">📸</div>
         <div class="dropzone__body">
           <label for="photoInput" class="btn btn--primary" id="photoLabel">Add photos</label>
-          <p class="dropzone__hint">or drag &amp; drop them here. Pick as many as you like. Big photos are shrunk a little automatically so you can save many more.</p>
+          <p class="dropzone__hint">or drag &amp; drop them here. Pick as many as you like.</p>
         </div>
       </div>
       <p class="storage-note" id="storageNote" aria-live="polite"></p>
-
-      <div class="albums" aria-labelledby="albumsTitle">
-        <h3 class="albums__title" id="albumsTitle">📁 Folders &amp; highlights</h3>
-        <div class="albums__row" id="albumRow" role="group" aria-label="Photo folders"></div>
-        <form class="albums__form" id="albumForm" hidden autocomplete="off">
-          <label class="sr-only" for="albumName">Folder name</label>
-          <input id="albumName" type="text" maxlength="30" placeholder="Folder name, e.g. Besties, Field trip" required>
-          <button class="btn btn--small btn--primary" type="submit" id="albumSave">Create folder</button>
-          <button class="btn btn--small" type="button" id="albumCancel">Cancel</button>
-        </form>
-        <div class="albums__tools" id="albumTools" hidden>
-          <button class="btn btn--small" id="albumRename" type="button">✏️ Rename</button>
-          <button class="btn btn--small" id="albumDelete" type="button">🗑️ Delete folder</button>
-          <span class="muted">Your photos are kept. They just go back to &ldquo;All&rdquo;.</span>
-        </div>
-      </div>
 
       <p class="count" id="wallCount" aria-live="polite"></p>
       <div class="wall" id="wall"></div>
@@ -249,13 +220,15 @@
       <div class="section__head reveal">
         <p class="eyebrow"><span class="eyebrow__num">6</span> Comfort 🏡</p>
         <h2 id="homeTitle">Words from home</h2>
-        <p class="section__sub" id="homeIntro"></p>
+        <p class="section__sub">
+          If you're upset about a grade, about school, or about life &mdash; these are the words we hope
+          you'd hear from your Mom and Dad when you walk through the door. Open each letter.
+        </p>
       </div>
 
-      <div class="tabs reveal" id="homeTabs" role="group" aria-label="Choose what kind of words you need"></div>
       <div class="letters" id="letters"></div>
 
-      <aside class="callout reveal" id="calloutTell">
+      <aside class="callout reveal">
         <h3>How do I tell my parents I'm struggling?</h3>
         <ol>
           <li><strong>Pick a calm moment.</strong> After dinner or when things are quiet is usually easier.</li>
@@ -267,22 +240,6 @@
           a teacher, a guidance counselor, an aunt or uncle, or a close friend.
         </p>
       </aside>
-
-      <aside class="callout callout--heavy" id="calloutHeavy" hidden>
-        <h3>When you're compared or put down at home</h3>
-        <ol>
-          <li><strong>Pause before you react.</strong> Breathe in for 4, out for 6. You don't have to win any argument tonight.</li>
-          <li><strong>Don't take the comparison as the truth.</strong> It measures someone else's path. It says nothing about your value.</li>
-          <li><strong>Say it when things are calm.</strong> Try: &ldquo;Mom, Dad, I want to do well, but being compared makes me feel worse, not better. Can you help me instead?&rdquo;</li>
-          <li><strong>Find your safe person.</strong> A teacher, counselor, relative or friend who can listen to what home is like for you.</li>
-        </ol>
-        <p class="callout__note">
-          Many parents compare because they're afraid for your future or carry their own pressure. That can explain it,
-          but it doesn't make it okay, and it doesn't make you less. If you ever feel unsafe, or feel like you can't go on,
-          tell a trusted adult right away or call the NCMH Crisis Hotline, open 24/7: <strong>1553</strong> or 1800-1888-1553
-          (Smart/TNT 0919-057-1553, Globe/TM 0917-899-8727).
-        </p>
-      </aside>
     </section>
 
     <!-- ============ BREATHE ============ -->
@@ -290,14 +247,8 @@
       <div class="section__head reveal">
         <p class="eyebrow"><span class="eyebrow__num">7</span> Reset 💚</p>
         <h2 id="breatheTitle">Take it slow</h2>
-        <p class="section__sub">Put everything down for a minute. You have done enough for now. Here are a few gentle words, and three small tools to help you reset.</p>
+        <p class="section__sub">Three small tools: a breathing exercise, a few small steps for today, and a list of your little wins.</p>
       </div>
-
-      <figure class="gentle reveal">
-        <figcaption class="gentle__label" id="gentleLabel">💚 A gentle word</figcaption>
-        <blockquote class="gentle__text" id="gentleText" aria-live="polite"></blockquote>
-        <button class="btn btn--small" id="gentleNext" type="button">💚 Another gentle word</button>
-      </figure>
 
       <div class="toolkit">
         <article class="panel reveal" aria-labelledby="breathTitle">
@@ -366,7 +317,8 @@
   </main>
 
   <footer class="site-footer">
-    <p class="footer__big" id="footerBig">You don't have to be perfect. Showing up is enough. 💛</p>
+    <p class="footer__big">You don't have to be perfect. Showing up is enough. 💛</p>
+    <p class="footer__small">Built with just HTML, CSS and JavaScript. No server, no tracking. Your favorites, photos and messages stay in your browser on this device.</p>
   </footer>
 
   <!-- Photo viewer -->
@@ -380,24 +332,11 @@
     <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="Next photo">›</button>
   </div>
 
-  <button class="to-top" id="toTop" type="button" aria-label="Scroll back to top">↑</button>
-
-  <!-- Welcome / name -->
-  <div class="welcome" id="welcome" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-    <form class="welcome__card" id="nameForm" autocomplete="off">
-      <h2 id="welcomeTitle">Hi! What should we call you? 💛</h2>
-      <p>Type your name or nickname so this page can greet you. It stays on this device only.</p>
-      <label class="sr-only" for="nameInput">Your name</label>
-      <input id="nameInput" type="text" maxlength="30" placeholder="Your name (e.g. Prince)">
-      <div class="welcome__actions">
-        <button class="btn btn--primary" type="submit">Save my name</button>
-        <button class="btn btn--ghost" id="nameSkip" type="button">Skip for now</button>
-      </div>
-    </form>
-  </div>
-
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
+  <script src="course.js"></script>
+  <script src="share.js"></script>
+  <script src="reminder.js"></script>
 </body>
 </html>
