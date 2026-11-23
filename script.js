@@ -321,6 +321,61 @@
     });
   }
 
+  // Hamburger menu (phones and tablets)
+  function initMenu() {
+    const btn = document.getElementById('menuToggle');
+    const nav = document.getElementById('siteNav');
+    if (!btn || !nav) return;
+    const mq = window.matchMedia ? window.matchMedia('(max-width: 980px)') : null;
+
+    function setOpen(open, returnFocus) {
+      nav.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close the menu' : 'Open the menu');
+      document.body.classList.toggle('menu-open', open);
+      if (!open && returnFocus) btn.focus();
+    }
+
+    btn.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!nav.classList.contains('is-open')); });
+    nav.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('is-open') && !nav.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) setOpen(false, true);
+    });
+    if (mq) {
+      const onChange = () => { if (!mq.matches) setOpen(false); };
+      if (mq.addEventListener) mq.addEventListener('change', onChange); else if (mq.addListener) mq.addListener(onChange);
+    }
+  }
+
+  // "Back to top" button: appears after scrolling down
+  function initBackToTop() {
+    if (document.getElementById('toTop')) return;
+    const btn = document.createElement('button');
+    btn.id = 'toTop'; btn.className = 'to-top'; btn.type = 'button';
+    btn.setAttribute('aria-label', 'Back to top'); btn.title = 'Back to top';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    btn.hidden = true;
+    document.body.append(btn);
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const show = window.pageYOffset > Math.max(360, window.innerHeight * 0.6);
+      if (show && btn.hidden) { btn.hidden = false; requestAnimationFrame(() => btn.classList.add('is-visible')); }
+      else if (!show && !btn.hidden) { btn.classList.remove('is-visible'); btn.hidden = true; }
+    };
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
+      const brand = document.querySelector('.brand'); // so keyboard users start from the top again
+      if (brand) setTimeout(() => brand.focus({ preventScroll: true }), reducedMotion() ? 0 : 500);
+    });
+    update();
+  }
+
   // Two-step confirm for delete buttons (confirm() is blocked in some frames)
   function armButton(btn, armedLabel, onConfirm) {
     let armed = false;
@@ -1197,6 +1252,8 @@
 
   function init() {
     initAnchorLinks();
+    initMenu();
+    initBackToTop();
     initTheme();
     initDaily();
     initMarquee();

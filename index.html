@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Still Got This — Motivational Quotes for Students</title>
   <meta name="description" content="Motivational quotes for students: when you're tired, with your classmates, going home sad, for academic struggles and mental health. Plus a photo wall and a private feelings journal.">
 
@@ -39,7 +39,7 @@
       <span>Still Got This</span>
     </a>
 
-    <nav class="nav" aria-label="Main menu">
+    <nav class="nav" id="siteNav" aria-label="Main menu">
       <a href="#pick">Quotes</a>
       <a href="#mood">Mood</a>
       <a href="#memories">Memories</a>
@@ -48,6 +48,10 @@
       <a href="#breathe">Breathe</a>
       <a href="#reach">Reach Out</a>
     </nav>
+
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Open the menu">
+      <span class="menu-toggle__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
 
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch between light and dark theme">
       <span aria-hidden="true" id="themeIcon">🌙</span>

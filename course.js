@@ -440,9 +440,11 @@
     .cs-note-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .cs-copy{width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.7);cursor:pointer;font-size:1rem}
     .cs-copy:hover{background:#fff}
-    .cs-fab{position:fixed;left:16px;bottom:16px;z-index:2147481000;padding:12px 18px;border-radius:999px;border:0;background:linear-gradient(135deg,#ff7a59,#ffb347);color:#2d2a3a;font:inherit;font-weight:800;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);cursor:pointer}
+    .cs-fab{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:max(16px,env(safe-area-inset-bottom));z-index:2147481000;padding:12px 18px;border-radius:999px;border:0;background:linear-gradient(135deg,#ff7a59,#ffb347);color:#2d2a3a;font:inherit;font-weight:800;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);cursor:pointer}
     .cs-toast{position:fixed;left:50%;bottom:24px;z-index:2147483600;transform:translate(-50%,24px);opacity:0;pointer-events:none;width:max-content;max-width:min(92vw,420px);padding:12px 22px;border-radius:16px;background:#2d2a3a;color:#fff;font-family:var(--font-body,system-ui,sans-serif);font-weight:800;line-height:1.4;text-align:center;box-shadow:0 12px 28px rgba(0,0,0,.4);transition:opacity .25s,transform .25s}
     .cs-toast.show{opacity:1;transform:translate(-50%,0)}
+    @media (max-width:520px){.cs-fab{padding:10px 14px;font-size:.88rem}.cs-dialog{padding:22px 16px 18px;border-radius:20px}}
+    @media (max-width:420px){.cs-fab{bottom:calc(max(16px,env(safe-area-inset-bottom)) + 52px)}}
     @keyframes cs-fade{from{opacity:0}to{opacity:1}}
     @keyframes cs-pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
     @media (prefers-reduced-motion:reduce){.cs-backdrop,.cs-dialog{animation:none}.cs-note-card,.cs-chip,.cs-btn{transition:none}}

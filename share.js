@@ -316,6 +316,7 @@
     @media (max-width:720px){.sg-cols{grid-template-columns:1fr}}
     .sg-previewbox{display:flex;flex-direction:column;align-items:center;gap:8px}
     .sg-preview{display:block;width:100%;max-width:300px;height:auto;max-height:55vh;object-fit:contain;border-radius:12px;box-shadow:0 12px 28px -12px rgba(0,0,0,.55);background:#eee;-webkit-touch-callout:default}
+    .sg-warn{margin-bottom:8px!important;padding:10px 12px;border-radius:12px;background:#fff0c7;color:#5a4300;font-weight:700;text-align:left}
     .sg-hint{font-size:.82rem;color:var(--ink-soft,#595470);text-align:center}
     .sg-controls{display:flex;flex-direction:column;gap:14px;min-width:0}
     .sg-field label,.sg-label{display:block;margin-bottom:6px;font-weight:800;font-size:.92rem}
@@ -347,12 +348,13 @@
     .sg-got__msg{margin:0 0 12px;font-family:var(--font-hand,Georgia,serif);font-weight:700;font-size:clamp(1.3rem,3.5vw,1.9rem);line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere}
     .sg-got__from{margin:0 0 10px;text-align:right;font-weight:800}
     .sg-got__q{margin:12px 0 0;padding-top:12px;border-top:2px dashed rgba(45,42,58,.25);font-style:italic;font-weight:600;overflow-wrap:anywhere}
-    .sg-fab{position:fixed;right:16px;bottom:16px;z-index:2147481000;padding:12px 18px;border-radius:999px;border:0;background:#2d2a3a;color:#fff;font:inherit;font-weight:800;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);cursor:pointer}
+    .sg-fab{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:2147481000;padding:12px 18px;border-radius:999px;border:0;background:#2d2a3a;color:#fff;font:inherit;font-weight:800;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);cursor:pointer}
     .sg-fab:hover{background:#413d55}
     .sg-mini{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.7);cursor:pointer;font-size:1rem;padding:0}
     .sg-mini:hover{background:#fff}
     .sg-toast{position:fixed;left:50%;bottom:24px;z-index:2147483600;transform:translate(-50%,24px);opacity:0;pointer-events:none;width:max-content;max-width:min(92vw,420px);padding:12px 22px;border-radius:16px;background:#2d2a3a;color:#fff;font-family:var(--font-body,system-ui,sans-serif);font-weight:800;line-height:1.4;text-align:center;box-shadow:0 12px 28px rgba(0,0,0,.4);transition:opacity .25s,transform .25s}
     .sg-toast.show{opacity:1;transform:translate(-50%,0)}
+    @media (max-width:520px){.sg-fab{padding:10px 14px;font-size:.88rem}.sg-dialog{padding:18px 14px 14px;border-radius:20px}}
     @keyframes sg-fade{from{opacity:0}to{opacity:1}}
     @keyframes sg-pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
     @media (prefers-reduced-motion:reduce){.sg-backdrop,.sg-dialog{animation:none}.sg-btn,.sg-toast{transition:none}}
@@ -390,6 +392,34 @@
     document.addEventListener('keydown', escHandler, true);
     document.body.append(openBackdrop);
     document.body.style.overflow = 'hidden';
+  }
+
+  // Facebook / Messenger / Instagram etc. open links in their own mini-browser, which often blocks saving files
+  const UA = navigator.userAgent || '';
+  const IN_APP = /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger|Instagram|Line\/|Snapchat|TikTok|MicroMessenger|Twitter/i.test(UA);
+  const IS_IOS = /iP(hone|ad|od)/.test(UA) || (/Macintosh/.test(UA) && (navigator.maxTouchPoints || 0) > 1);
+  const IS_ANDROID = /Android/i.test(UA);
+
+  // Can this browser hand a picture file to the phone's share sheet (where "Save Image" lives on iPhone)?
+  function canShareFile(blob) {
+    try {
+      const f = new File([blob], 'still-got-this.png', { type: 'image/png' });
+      return !!(navigator.canShare && navigator.canShare({ files: [f] }));
+    } catch (e) { return false; }
+  }
+
+  // Save button: iPhone -> share sheet (Save Image puts it in Photos). Others -> normal download.
+  async function savePicture(blob) {
+    if (IS_IOS && !IN_APP && canShareFile(blob)) {
+      try {
+        await navigator.share({ files: [new File([blob], 'still-got-this.png', { type: 'image/png' })] });
+        return;
+      } catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    download(blob, 'still-got-this.png');
+    if (IN_APP) toast('If nothing was saved: open this page in Chrome/Safari, or press and hold the picture.');
+    else if (IS_ANDROID) toast('Picture downloaded. Look in your Downloads or Files app. 💛');
+    else toast('Picture downloaded! 💛');
   }
 
   function download(blob, name) {
@@ -514,7 +544,7 @@
     const shareBtn = el('button', { class: 'sg-btn sg-btn--primary', type: 'button', text: '📤 Share picture' });
     shareBtn.addEventListener('click', busy(shareBtn, async () => { const b = await ensureBlob(); if (b) await sharePicture(b, shareText(), isMsg ? buildLink(linkData()) : ''); }));
     const saveBtn = el('button', { class: 'sg-btn', type: 'button', text: '⬇️ Save picture' });
-    saveBtn.addEventListener('click', busy(saveBtn, async () => { const b = await ensureBlob(); if (b) { download(b, 'still-got-this.png'); toast('Picture saved! 💛'); } }));
+    saveBtn.addEventListener('click', busy(saveBtn, async () => { const b = await ensureBlob(); if (b) await savePicture(b); }));
     const copyBtn = el('button', { class: 'sg-btn', type: 'button', text: '📋 Copy text', onclick: () => copyText(shareText(), 'Text copied! ✨') });
     const actions = el('div', { class: 'sg-actions' }, [shareBtn, saveBtn]);
 
@@ -528,7 +558,10 @@
     actions.append(copyBtn);
     controls.append(actions);
 
-    const hint = el('p', { class: 'sg-hint', text: 'On a phone, if Save doesn’t work, press and hold the picture, then choose Save image.' });
+    const hint = el('div', { class: 'sg-hint' }, [
+      IN_APP ? el('p', { class: 'sg-warn', text: '⚠️ You’re inside Messenger/Facebook’s browser, which often blocks saving. Open this page in Chrome or Safari, or press and hold the picture and choose Save image.' }) : null,
+      el('p', { text: IS_IOS ? 'iPhone: tap Save picture, then choose Save Image. Or press and hold the picture.' : 'On a phone you can also press and hold the picture, then choose Save image.' })
+    ]);
 
     const dialog = el('div', { 'aria-labelledby': 'sg-title' }, [
       el('h2', { id: 'sg-title', text: isMsg ? '💌 Message for a friend' : '🖼️ Share as a picture' }),
