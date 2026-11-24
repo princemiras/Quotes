@@ -708,3 +708,32 @@ main { overflow-x: clip; }
 .to-top:hover { border-color: var(--accent); background: var(--paper-2); transform: translateY(-3px); }
 .to-top:focus-visible { outline: 3px solid var(--accent-2, #146f6f); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
+
+/* ---------- Albums (folders for photos) ---------- */
+.addto { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-weight: 700; font-size: .95rem; }
+.addto__select, .polaroid__album {
+  max-width: 100%; padding: 8px 12px; border-radius: 12px; border: 2px solid var(--line);
+  background: var(--paper); color: var(--ink); font: inherit; font-weight: 600; font-size: .92rem;
+}
+.addto__select:focus-visible, .polaroid__album:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.polaroid__album { display: block; width: 100%; margin-top: 8px; padding: 6px 8px; font-size: .8rem; background: #fffdf7; color: #2d2a3a; }
+.albums { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.album-chip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px;
+  border: 2px solid var(--line); background: var(--card); color: var(--ink); font: inherit; font-weight: 800; font-size: .95rem; cursor: pointer;
+  transition: transform .15s, border-color .15s, background .15s; max-width: 100%;
+}
+.album-chip:hover { transform: translateY(-2px); border-color: var(--accent); }
+.album-chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.album-chip__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 46vw; }
+.album-chip__n { min-width: 24px; padding: 1px 8px; border-radius: 999px; background: rgba(127, 127, 127, .22); font-size: .8rem; text-align: center; }
+.album-chip--new { border-style: dashed; }
+.album-head { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 14px 18px; border-radius: 18px; background: var(--card); border: 2px solid var(--line); }
+.album-head[hidden] { display: none; }
+.album-head__title { margin: 0; font-family: var(--font-head, inherit); font-size: 1.3rem; font-weight: 600; overflow-wrap: anywhere; flex: 1 1 200px; }
+.album-head__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.album-head__note { flex-basis: 100%; margin: 0; font-size: .85rem; color: var(--ink-soft); }
+.album-form { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.album-form__input { flex: 1 1 220px; min-width: 0; padding: 11px 14px; border-radius: 12px; border: 2px solid var(--line); background: var(--paper); color: var(--ink); font: inherit; }
+.album-form__input:focus { outline: none; border-color: var(--accent-2, #146f6f); }
+@media (prefers-reduced-motion: reduce) { .album-chip { transition: none; } }

@@ -158,8 +158,9 @@
         <p class="eyebrow"><span class="eyebrow__num">4</span> Remember 📸</p>
         <h2 id="memoriesTitle">Your memory wall</h2>
         <p class="section__sub">
-          Add photos of you and your friends &mdash; the faces that make school easier. There's no limit on how many
-          you can add. Your photos stay private on this device and never get uploaded anywhere.
+          Add photos of you and your friends &mdash; the faces that make school easier. Put them in albums with your own
+          names, like on Facebook. There's no limit on how many photos or albums you can have. Your photos stay private on
+          this device and never get uploaded anywhere.
         </p>
       </div>
 
@@ -169,9 +170,15 @@
         <div class="dropzone__body">
           <label for="photoInput" class="btn btn--primary" id="photoLabel">Add photos</label>
           <p class="dropzone__hint">or drag &amp; drop them here. Pick as many as you like.</p>
+          <label class="addto" for="addTo">📁 Add to album:
+            <select id="addTo" class="addto__select"></select>
+          </label>
         </div>
       </div>
       <p class="storage-note" id="storageNote" aria-live="polite"></p>
+
+      <div class="albums" id="albums" aria-label="Photo albums"></div>
+      <div class="album-head" id="albumHead" hidden></div>
 
       <p class="count" id="wallCount" aria-live="polite"></p>
       <div class="wall" id="wall"></div>
@@ -339,8 +346,10 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
+  <script src="chat-config.js"></script>
   <script src="course.js"></script>
   <script src="share.js"></script>
+  <script src="chat.js"></script>
   <script src="reminder.js"></script>
 </body>
 </html>

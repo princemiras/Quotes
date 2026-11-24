@@ -400,26 +400,13 @@
   const IS_IOS = /iP(hone|ad|od)/.test(UA) || (/Macintosh/.test(UA) && (navigator.maxTouchPoints || 0) > 1);
   const IS_ANDROID = /Android/i.test(UA);
 
-  // Can this browser hand a picture file to the phone's share sheet (where "Save Image" lives on iPhone)?
-  function canShareFile(blob) {
-    try {
-      const f = new File([blob], 'still-got-this.png', { type: 'image/png' });
-      return !!(navigator.canShare && navigator.canShare({ files: [f] }));
-    } catch (e) { return false; }
-  }
-
-  // Save button: iPhone -> share sheet (Save Image puts it in Photos). Others -> normal download.
+  // Save button: always downloads the picture to the device (Share button is the one that opens the share sheet).
   async function savePicture(blob) {
-    if (IS_IOS && !IN_APP && canShareFile(blob)) {
-      try {
-        await navigator.share({ files: [new File([blob], 'still-got-this.png', { type: 'image/png' })] });
-        return;
-      } catch (e) { if (e && e.name === 'AbortError') return; }
-    }
     download(blob, 'still-got-this.png');
-    if (IN_APP) toast('If nothing was saved: open this page in Chrome/Safari, or press and hold the picture.');
-    else if (IS_ANDROID) toast('Picture downloaded. Look in your Downloads or Files app. 💛');
-    else toast('Picture downloaded! 💛');
+    if (IN_APP) toast('If nothing was saved: open this page in Chrome or Safari, or press and hold the picture.');
+    else if (IS_IOS) toast('Downloaded! Find it in the Files app (Downloads). 💛');
+    else if (IS_ANDROID) toast('Downloaded! Find it in your Downloads or Files app. 💛');
+    else toast('Downloaded to your Downloads folder! 💛');
   }
 
   function download(blob, name) {
@@ -560,7 +547,7 @@
 
     const hint = el('div', { class: 'sg-hint' }, [
       IN_APP ? el('p', { class: 'sg-warn', text: '⚠️ You’re inside Messenger/Facebook’s browser, which often blocks saving. Open this page in Chrome or Safari, or press and hold the picture and choose Save image.' }) : null,
-      el('p', { text: IS_IOS ? 'iPhone: tap Save picture, then choose Save Image. Or press and hold the picture.' : 'On a phone you can also press and hold the picture, then choose Save image.' })
+      el('p', { text: IS_IOS ? 'iPhone: Save picture goes to the Files app. To put it in Photos, press and hold the picture and choose Save Image.' : 'Save picture downloads the picture to your phone. To put it in your Gallery, you can also press and hold it and choose Save image.' })
     ]);
 
     const dialog = el('div', { 'aria-labelledby': 'sg-title' }, [
@@ -645,7 +632,10 @@
   function addFab() {
     if (document.getElementById('sg-fab')) return;
     injectStyles();
-    document.body.append(el('button', { id: 'sg-fab', class: 'sg-fab', type: 'button', text: '💌 Message a friend', onclick: () => openStudio({ kind: 'message' }) }));
+    document.body.append(el('button', { id: 'sg-fab', class: 'sg-fab', type: 'button', text: '💌 Message a friend', onclick: () => {
+      const api = window.StillGotThis || {};
+      if (api.chatReady && api.chatReady() && api.openChat) api.openChat(); else openStudio({ kind: 'message' });
+    } }));
   }
 
   /* ---------------------------------------------------------

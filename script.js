@@ -729,6 +729,10 @@
      --------------------------------------------------------- */
 
   let photos = [];                 // metadata, newest first
+  let shownPhotos = [];            // the photos in the album being viewed
+  let albums = store.get('albums', []);   // [{ id, name, ts }]  (no limit)
+  let currentAlbum = 'all';        // 'all' | 'none' (not in an album) | an album id
+  let albumFormMode = null;        // null | 'new' | 'rename'
   const thumbUrls = new Map();     // photo id -> object URL for the grid
   let lightboxIndex = -1;
   let lightboxUrl = null;
@@ -766,11 +770,163 @@
     return url;
   }
 
+  /* ---- Albums (folders with your own names) ---- */
+  const albumById = (id) => albums.find((a) => a.id === id);
+  const inAlbum = (p) => !!(p.album && albumById(p.album));
+  const countIn = (id) => photos.filter((p) => p.album === id).length;
+  const unsortedCount = () => photos.filter((p) => !inAlbum(p)).length;
+
+  function visiblePhotos() {
+    if (currentAlbum === 'all') return photos;
+    if (currentAlbum === 'none') return photos.filter((p) => !inAlbum(p));
+    return photos.filter((p) => p.album === currentAlbum);
+  }
+  const refreshShown = () => { shownPhotos = visiblePhotos(); };
+
+  function cleanAlbumName(v) { return String(v || '').replace(/\s+/g, ' ').trim().slice(0, 40); }
+  const newAlbumId = () => 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+  function renderAddTo() {
+    const sel = $('addTo');
+    if (!sel) return;
+    const keep = sel.value;
+    sel.textContent = '';
+    sel.append(h('option', { value: '', text: 'No album (Unsorted)' }));
+    albums.forEach((a) => sel.append(h('option', { value: a.id, text: a.name })));
+    const want = albumById(currentAlbum) ? currentAlbum : keep;
+    sel.value = albumById(want) ? want : '';
+  }
+
+  function setAlbum(id) {
+    currentAlbum = id;
+    albumFormMode = null;
+    refreshShown();
+    renderWall();
+  }
+
+  function submitAlbumForm(name) {
+    const clean = cleanAlbumName(name);
+    if (!clean) { toast('Type a name for the album first.'); return false; }
+    const clash = albums.find((a) => a.name.toLowerCase() === clean.toLowerCase() && !(albumFormMode === 'rename' && a.id === currentAlbum));
+    if (clash) { toast('You already have an album with that name.'); return false; }
+    if (albumFormMode === 'rename') {
+      const a = albumById(currentAlbum);
+      if (a) a.name = clean;
+      store.set('albums', albums);
+      albumFormMode = null;
+      toast('Album renamed ✏️');
+    } else {
+      const a = { id: newAlbumId(), name: clean, ts: Date.now() };
+      albums.push(a);
+      store.set('albums', albums);
+      currentAlbum = a.id;
+      albumFormMode = null;
+      toast(`Album "${clean}" created 📁`);
+    }
+    refreshShown();
+    renderWall();
+    return true;
+  }
+
+  async function deleteCurrentAlbum() {
+    const a = albumById(currentAlbum);
+    if (!a) return;
+    const inside = photos.filter((p) => p.album === a.id);
+    try {
+      for (const p of inside) { p.album = ''; await db.put('photos', p); }
+    } catch (e) { toast("Couldn't update the photos in that album."); return; }
+    albums = albums.filter((x) => x.id !== a.id);
+    store.set('albums', albums);
+    currentAlbum = 'all';
+    albumFormMode = null;
+    refreshShown();
+    renderWall();
+    toast(`Album "${a.name}" deleted. Its ${inside.length} ${inside.length === 1 ? 'photo is' : 'photos are'} still on your wall.`, 4200);
+  }
+
+  function renderAlbumBar() {
+    const bar = $('albums');
+    const head = $('albumHead');
+    if (!bar || !head) return;
+    bar.textContent = '';
+    head.textContent = '';
+
+    const chip = (id, label, count) => h('button', {
+      class: 'album-chip', type: 'button', 'aria-pressed': String(currentAlbum === id),
+      onclick: () => setAlbum(id)
+    }, [h('span', { class: 'album-chip__name', text: label }), h('span', { class: 'album-chip__n', text: String(count) })]);
+
+    bar.append(chip('all', '🖼️ All photos', photos.length));
+    if (albums.length) bar.append(chip('none', '📌 Unsorted', unsortedCount()));
+    albums.forEach((a) => bar.append(chip(a.id, '📁 ' + a.name, countIn(a.id))));
+    bar.append(h('button', {
+      class: 'album-chip album-chip--new', type: 'button', text: '➕ New album',
+      onclick: () => { albumFormMode = albumFormMode === 'new' ? null : 'new'; renderAlbumBar(); const i = $('albumNameInput'); if (i) i.focus(); }
+    }));
+
+    const cur = albumById(currentAlbum);
+    const showForm = albumFormMode === 'new' || (albumFormMode === 'rename' && cur);
+    if (showForm) {
+      const input = h('input', {
+        class: 'album-form__input', id: 'albumNameInput', type: 'text', maxlength: '40', autocomplete: 'off',
+        placeholder: albumFormMode === 'rename' ? 'New name for this album' : 'Album name, e.g. Besties 💛',
+        'aria-label': 'Album name', value: albumFormMode === 'rename' ? cur.name : ''
+      });
+      const form = h('form', { class: 'album-form' }, [
+        input,
+        h('button', { class: 'btn btn--small btn--primary', type: 'submit', text: albumFormMode === 'rename' ? 'Save name' : 'Create album' }),
+        h('button', { class: 'btn btn--small', type: 'button', text: 'Cancel', onclick: () => { albumFormMode = null; renderAlbumBar(); } })
+      ]);
+      form.addEventListener('submit', (e) => { e.preventDefault(); submitAlbumForm(input.value); });
+      head.append(form);
+      head.hidden = false;
+      return;
+    }
+
+    if (cur) {
+      const del = h('button', { class: 'btn btn--small', type: 'button', text: '🗑️ Delete album' });
+      head.append(
+        h('h3', { class: 'album-head__title', text: '📁 ' + cur.name }),
+        h('div', { class: 'album-head__actions' }, [
+          h('button', { class: 'btn btn--small', type: 'button', text: '✏️ Rename', onclick: () => { albumFormMode = 'rename'; renderAlbumBar(); const i = $('albumNameInput'); if (i) { i.focus(); i.select(); } } }),
+          del
+        ]),
+        h('p', { class: 'album-head__note', text: 'Deleting an album keeps its photos. They move to Unsorted.' })
+      );
+      armButton(del, 'Tap again to delete', () => deleteCurrentAlbum());
+      head.hidden = false;
+    } else {
+      head.hidden = true;
+    }
+  }
+
   function updateWallUi() {
-    $('wallEmpty').hidden = photos.length > 0;
-    $('wallCount').textContent = photos.length
-      ? `${photos.length} ${photos.length === 1 ? 'memory' : 'memories'} on your wall`
+    const cur = albumById(currentAlbum);
+    const place = currentAlbum === 'all' ? 'on your wall' : (currentAlbum === 'none' ? 'in Unsorted' : `in "${cur ? cur.name : 'this album'}"`);
+    const empty = $('wallEmpty');
+    empty.hidden = shownPhotos.length > 0;
+    if (!empty.hidden) {
+      empty.textContent = photos.length === 0
+        ? 'No photos yet. Add your first picture with your friends. They\'ll show up here like pinned polaroids. 🖼️'
+        : (cur ? `This album is empty. Choose "${cur.name}" in "Add to album" above, then add photos. 📁` : 'Nothing here yet.');
+    }
+    $('wallCount').textContent = shownPhotos.length
+      ? `${shownPhotos.length} ${shownPhotos.length === 1 ? 'memory' : 'memories'} ${place}`
       : '';
+    renderAlbumBarCounts();
+  }
+  // keep the numbers on the chips fresh without rebuilding the whole bar (keeps keyboard focus)
+  function renderAlbumBarCounts() {
+    const bar = $('albums');
+    if (!bar) return;
+    const chips = bar.querySelectorAll('.album-chip:not(.album-chip--new)');
+    const ids = ['all'].concat(albums.length ? ['none'] : [], albums.map((a) => a.id));
+    chips.forEach((c, i) => {
+      const id = ids[i];
+      const n = c.querySelector('.album-chip__n');
+      if (!n || id === undefined) return;
+      n.textContent = String(id === 'all' ? photos.length : (id === 'none' ? unsortedCount() : countIn(id)));
+    });
   }
 
   function makePolaroid(meta, index) {
@@ -782,7 +938,7 @@
 
     const open = h('button', {
       class: 'polaroid__imgbtn', type: 'button', 'aria-label': 'View this photo larger',
-      onclick: (e) => openLightbox(photos.findIndex((p) => p.id === meta.id), e.currentTarget)
+      onclick: (e) => openLightbox(shownPhotos.findIndex((p) => p.id === meta.id), e.currentTarget)
     }, [img]);
 
     const cap = h('input', {
@@ -797,8 +953,25 @@
     cap.addEventListener('keydown', (e) => { if (e.key === 'Enter') cap.blur(); });
 
     const del = h('button', { class: 'polaroid__del', type: 'button', 'aria-label': 'Delete this photo', text: '✕' });
+    let mover = null;
+    if (albums.length) {
+      mover = h('select', { class: 'polaroid__album', 'aria-label': 'Move this photo to an album' }, [
+        h('option', { value: '', text: '📌 No album' }),
+        ...albums.map((a) => h('option', { value: a.id, text: '📁 ' + a.name }))
+      ]);
+      mover.value = inAlbum(meta) ? meta.album : '';
+      mover.addEventListener('change', async () => {
+        const to = mover.value;
+        try { meta.album = to; await db.put('photos', meta); } catch (e) { toast("Couldn't move that photo."); return; }
+        const name = albumById(to) ? albumById(to).name : 'Unsorted';
+        refreshShown();
+        if (currentAlbum !== 'all' && !shownPhotos.some((p) => p.id === meta.id)) card.remove();
+        updateWallUi();
+        toast(`Moved to "${name}" 📁`);
+      });
+    }
     const card = h('article', { class: 'polaroid', 'data-id': String(meta.id) }, [
-      del, open, cap, h('span', { class: 'polaroid__date', text: formatDate(meta.ts) })
+      del, open, cap, mover, h('span', { class: 'polaroid__date', text: formatDate(meta.ts) })
     ]);
     card.style.setProperty('--tilt', TILTS[index % TILTS.length]);
     armButton(del, 'Delete?', () => removePhoto(meta.id, card));
@@ -811,6 +984,7 @@
       await db.del('files', id);
     } catch (e) { toast("Couldn't delete that photo."); return; }
     photos = photos.filter((p) => p.id !== id);
+    refreshShown();
     const url = thumbUrls.get(id);
     if (url) { URL.revokeObjectURL(url); thumbUrls.delete(id); }
     if (card && card.remove) card.remove();
@@ -821,7 +995,10 @@
   function renderWall() {
     const wall = $('wall');
     wall.textContent = '';
-    photos.forEach((p, i) => wall.append(makePolaroid(p, i)));
+    refreshShown();
+    shownPhotos.forEach((p, i) => wall.append(makePolaroid(p, i)));
+    renderAlbumBar();
+    renderAddTo();
     updateWallUi();
   }
 
@@ -835,16 +1012,17 @@
     }
 
     let saved = 0;
+    const targetAlbum = $('addTo') && albumById($('addTo').value) ? $('addTo').value : '';
     for (let i = 0; i < files.length; i += 1) {
       const f = files[i];
       if (files.length > 1) toast(`Saving photo ${i + 1} of ${files.length}…`, 6000);
       try {
         const thumb = await makeThumb(f);
-        const meta = await db.put('photos', { ts: Date.now() + i, name: f.name || 'photo', type: f.type || '', size: f.size || 0, caption: '', thumb });
+        const meta = await db.put('photos', { ts: Date.now() + i, name: f.name || 'photo', type: f.type || '', size: f.size || 0, caption: '', album: targetAlbum, thumb });
         await db.put('files', { id: meta.id, blob: f });
         photos.unshift(meta);
-        const wall = $('wall');
-        wall.prepend(makePolaroid(meta, 0));
+        refreshShown();
+        if (shownPhotos.some((p) => p.id === meta.id)) $('wall').prepend(makePolaroid(meta, 0));
         saved += 1;
         updateWallUi();
       } catch (e) {
@@ -852,13 +1030,16 @@
         toast(`Couldn't save "${f.name || 'a photo'}".`);
       }
     }
-    if (saved) toast(`${saved} ${saved === 1 ? 'photo' : 'photos'} added to your wall 📸${skipped ? ` (${skipped} skipped)` : ''}`);
+    if (saved) {
+      const where = albumById(targetAlbum) ? `to "${albumById(targetAlbum).name}"` : 'to your wall';
+      toast(`${saved} ${saved === 1 ? 'photo' : 'photos'} added ${where} 📸${skipped ? ` (${skipped} skipped)` : ''}`);
+    }
     updateStorageNote();
   }
 
   /* ---- Lightbox ---- */
   async function showLightbox(index) {
-    const meta = photos[index];
+    const meta = shownPhotos[index];
     if (!meta) return;
     lightboxIndex = index;
     const rec = await db.get('files', meta.id);
@@ -869,7 +1050,7 @@
     img.src = lightboxUrl;
     img.alt = meta.caption || 'Photo with friends';
     $('lbCap').textContent = meta.caption || '';
-    const multiple = photos.length > 1;
+    const multiple = shownPhotos.length > 1;
     $('lbPrev').hidden = !multiple;
     $('lbNext').hidden = !multiple;
   }
@@ -894,8 +1075,8 @@
   }
 
   function stepLightbox(delta) {
-    if (!photos.length || lightboxIndex < 0) return;
-    showLightbox((lightboxIndex + delta + photos.length) % photos.length);
+    if (!shownPhotos.length || lightboxIndex < 0) return;
+    showLightbox((lightboxIndex + delta + shownPhotos.length) % shownPhotos.length);
   }
 
   function initLightbox() {

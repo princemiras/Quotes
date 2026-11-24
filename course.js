@@ -671,7 +671,7 @@
     const profile = loadProfile();
     // First visit: the popup comes first. (The page section / floating button appear once they finish or skip.)
     // If someone opened a friend's message link (#m=...), show that first and don't cover it with the welcome popup
-    const fromFriend = /^#m=/.test(location.hash || '');
+    const fromFriend = /^#(m|f)=/.test(location.hash || '');
     if (!profile && !fromFriend) setTimeout(() => openOnboarding({ edit: false }), 350);
     else renderForYou();
   }
